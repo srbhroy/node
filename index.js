@@ -10,7 +10,7 @@ app.use(cookieParser());
 app.use(session({secret: "1111"}));
 //app.use(express.static("C:/Users/DAPL-Asset-224/Desktop/dashboard"));
 app.engine('pug', require('pug').__express)
-app.set('views','C:/Users/DAPL-Asset-224/Desktop/dashboard/view');
+app.set('views','./view');
 app.set("view engine",'pug');
 mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true});
 mongoose.connection
