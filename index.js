@@ -13,6 +13,7 @@ app.engine('pug', require('pug').__express)
 app.set('views','./view');
 app.set("view engine",'pug');
 //
+const MongoClient = require('mongodb').MongoClient
 const uri = "mongodb+srv://srbhroy5:hajmola@1@cluster0.nsvaq.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
