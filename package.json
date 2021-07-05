@@ -4,7 +4,7 @@
   "description": "A previous login project with added dashboard for adding users details.",
   "main": "index.js",
   "scripts": {
-    "test": "node index"
+    "start": "node server.js"
   },
   "author": "Sourabh Roy",
   "license": "ISC",
