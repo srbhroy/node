@@ -13,7 +13,7 @@ app.engine('pug', require('pug').__express)
 app.set('views','./view');
 app.set("view engine",'pug');
 //
-const uri = "mongodb+srv://srbhroy5:<hajmola@1>@cluster0.nsvaq.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://srbhroy5:hajmola@1@cluster0.nsvaq.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
@@ -21,12 +21,12 @@ client.connect(err => {
   client.close();
 });
 //
-mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true});
+/*mongoose.connect('mongodb://localhost:27017/test',{useNewUrlParser:true});
 mongoose.connection
         .once("open",()=>
             console.log("MongoDB Connection successfull"))
         .on("error",(error)=>
-           console.log("Connection unsuccessfull",error));
+           console.log("Connection unsuccessfull",error)); */
 let schema = new mongoose.Schema({
     name:String,
     username:String,
