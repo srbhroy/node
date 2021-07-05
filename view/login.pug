@@ -1,0 +1,49 @@
+doctype html
+html 
+  head
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    script(type='text/javascript', src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+    script(type="text/javascript").
+            $(document).ready(function() {
+            $('#username').click(function() {
+              $("#msg").html("");
+            });
+            $('#password').click(function() {
+              $("#msg").html("");
+            });
+            $('#submit').click(function() {
+                let username = $("#username").val();
+                let password = $("#password").val();
+                let messag = "";
+                if(username=="") {
+                    messag += "Username is blank";
+                    event.preventDefault();
+                }
+                else if(password=="") {
+                    messag += " Password is blank";
+                    event.preventDefault();
+                }
+                else {
+                  $("#logindiv").submit();
+                }
+                $("#msg").html(messag);
+            });
+            });
+  body(class='container align-center')    
+    div(class='col-sm-5')
+      h1#pagetitle(class='display-1') Welcome to Login page
+      div(class='alert alert-warning', role='alert')
+          h2#msg=message
+
+      form#logindiv(action='/', method='post' name='login', class='form-group')
+          table#logintable(class='table')  
+          tr
+          | Username:
+          input#username(type='text', name='username', class='form-control')
+          br
+          tr
+          | Password:
+          input#password(type='password', name='password', class='form-control')
+          br
+          tr
+          input#submit(type='submit', name='Log in', value='Log in', class='btn btn-primary form-control')

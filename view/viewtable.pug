@@ -1,0 +1,59 @@
+doctype html
+html
+  head
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous')
+    script(type='text/javascript', src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+    script(type="text/javascript").
+      $(document).ready(function(data) {
+        //- $('a.link-primary').click(function(event){
+        //-   var $this = $(this);
+        //-   let uid = $this.data("user");
+        //-   alert("hello")
+        //-     $.post("/edit",{id:uid},function() {
+        //-       alert("I'm here.")
+
+        //-     });
+        //- });
+        $('a.link-danger').on("click", function(event){
+        var $this = $(this);
+        var c = confirm('Are you sure to delete this message?');
+           if(c) {
+            let uid = $this.data("user");
+            $.post("/delete",{id:uid},function() {
+              //- if(responce) {
+              //-   alert("Can not delete.")
+              //- }
+              //- else {
+                $this.parents('tr').fadeOut(function() {
+                $this.remove();
+                });
+              //- }
+           });
+        }
+        return false;
+        });
+      });
+  body
+    a(href='/dashboard')
+      input.btn.btn-info(type="button", value="Go back")
+    h1.h1(style="text-align:center") User list
+      table#json.table.justify-content-center
+        tr#head
+          th=message.name
+            | Serial no.
+          th
+            | Full name
+          th
+            | Email
+          th
+            | Action
+            each item, i in message
+              tr
+                td=i+1 
+                - const naam = item.name + " " +item.lname
+                td=naam
+                td=item.email
+                td
+                  - const url = "/edit?id="+item._id
+                  a(href=url class="link-primary" data-user=item._id) Edit    
+                  a(href="/delete" class="link-danger" data-user=item._id) Delete

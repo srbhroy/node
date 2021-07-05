@@ -1,0 +1,214 @@
+doctype html 
+html 
+    head 
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+        <script src="//cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+        script.
+            CKEDITOR.replace('paddr')
+        script.
+            CKEDITOR.replace('baddr')
+        script(type='text/javascript', src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+        script(type="text/javascript").
+            $(document).ready(function() {
+                $("#add").click(function() {
+                    let struc = " <tr id='data'><td> Family name: <input type='text' id='a' class='form-control'/></td><td> Relation: <input type='text' id='b' class='form-control'/></td><td> ID type: <select class='form-control' id='c' name='idtype'><option value=''></option><option value='Aadhaar'>Aadhaar</option><option value='Voter ID'>Voter ID</option><option value='Driving license'>Driving license</option></select></td><td> ID number: <input type='text' id='d' class='form-control'/></td><td> <input type='button' class='btn btn-danger' value= 'Delete'/></td></tr>"
+                    if( $("#by").children().length == 0) {
+                        $("#by").after(struc);
+                    }
+                    else {
+                        $("#by tr:last").append(struc);
+                        alert("No children");
+                    }
+                });
+                $("#submit").click(function() {
+                    let firstname = $("#firstname").val();
+                    let lastname = $("#lastname").val();
+                    let username = $("#username").val();
+                    let email = $("#email").val();
+                    let status = $('#status:checked').val()=="true"?true:false;
+                    let paddress = $("#paddr").val();
+                    let baddress = $("#baddr").val();
+                    let text = "";
+                    let obj ={};
+                    let fa = [];
+                    let faa = [];
+                    alert($("tr.dat").length)
+                    if($("#tr.dat").children().length > 0) {
+                        $("#tr.dat").each(function() {
+                            let _id = $("this").find("#fname").data('id');
+                            let url = $("this").find("#relation").data('url');
+                            let fname = $("this").find("#fname").val();
+                            let relation = $("this").find("#relation").val();
+                            let idtype = $("this").find("#idtype").val();
+                            let idnumber = $("this").find("#idnumber").val();
+                            let famobj = {
+                                "_id":_id,
+                                "uid":url,
+                                "fname":fname,
+                                "relation":relation,
+                                "id_type":idtype,
+                                "id_number":idnumber
+                            };
+                            fa.push(famobj);
+                            console.log(fa);
+                            alert(fa);
+                        }) 
+                    }
+                    //- if($("#dat").length > 0) {
+                    //-     let ooj = $("#dat");
+                    //-     ooj.each(function() {
+                    //-         let fname = $("this").find("#a").val();
+                    //-         let relation = $("this").find("#b").val();
+                    //-         let idtype = $("this").find("#c").val();
+                    //-         let idnumber = $("this").find("#d").val();
+                    //-         let famobj = {
+                    //-             "uid":url,
+                    //-             "fname":fname,
+                    //-             "relation":relation,
+                    //-             "id_type":idtype,
+                    //-             "id_number":idnumber
+                    //-         };
+                    //-         faa.push(famobj);
+                    //-         console.log(faa);
+                    //-     }) 
+                    //- }
+                    if(firstname == "") {
+                        text +="Please fill in your first name. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else if(lastname == "") {
+                        text +="Please fill in your last name. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else if(username == "") {
+                        text +="Please fill in your username. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else if(/.+[0-9]+$/.test(email) || email == "") {
+                        text +="Please fill in your email. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else if(status == undefined) {
+                        text +="Please check status. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else if(paddress == "") {
+                        text +="Please check permanent address. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else if(baddress == "") {
+                        text +="Please check business address. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else if(fa == [] || faa == []) {
+                        text +="Please add atleast one family member. ";
+                        alert(text);
+                        $( "#dash" ).submit(function( event ) {
+                            event.preventDefault();
+                        });
+                    }
+                    else {
+                        obj.name = firstname;
+                        obj.lname = lastname;
+                        obj.username = username;
+                        obj.email = email;
+                        obj.status = status;
+                        obj.paddress = paddress;
+                        obj.baddress = baddress;
+                        console.log(obj);
+                        console.log({objct:obj,fam:fa,fami:faa});
+                        //- $.post("/update",{objct:obj,fam:fa,fami:faa},function() {
+                        //-     console.log({objct:obj,fam:fa,fami:faa});
+                        //- });
+                        $( "#dash" ).submit(function( event ) {
+                                event.preventDefault();
+                            });
+                        }
+                    });
+                });
+    body(class='container align-center')
+        a(href='/view')
+                input.btn.btn-info(type="button", value="Go back")
+        h1.h1(style="text-align:center") Update User details
+        form#dash.form-group(action='' method='post' name='dash')
+            table.table
+                tr
+                    td First name:
+                    td
+                        input#firstname.form-control(type='text' name='firstname' value= message.name)
+                tr
+                    td Last name :
+                    td
+                        input#lastname.form-control(type='text' name='lastname' value = message.lname)
+                tr
+                    td Username
+                    td
+                        input#username.form-control(type='text' name='username' value = message.username)
+                tr
+                    td Email:
+                    td
+                        input#email.form-control(type='email' name='email' value = message.email)
+                tr
+                    td Status:
+                    td True 
+                        input#status.form-control(type='radio' name='status' value='yes' checked= message.status==true)
+                    td False 
+                        input#status.form-control(type='radio' name='status' value='no' checked= message.status==false)
+                tr 
+                    td Permanent address:
+                    td
+                        textarea#paddr.form-control(name="paddr" cols="30", rows="10")=message.paddress
+                tr
+                    td Business address: 
+                    td
+                        textarea#baddr.form-control(name="baddr" cols="30" rows="10")=message.baddress 
+                tr#addfamily
+                    td Add family details:
+                tr#by
+                    each item in relation 
+                        tr.dat 
+                            td Family name:
+                                input#fname.form-control(type="text" class="text" data-id= item._id value= item.fname)
+                            td Relation:
+                                input#relation.form-control(type="text" class="text" data-url= url  value= item.relation)
+                            td ID type:
+                                select#idtype.form-control(name="idtype" class="select") #{item.id_type}
+                                        option(value="")
+                                        option(value="Aadhaar" selected= item.id_type=="Aadhaar") Aadhaar
+                                        option(value="Voter ID" selected= item.id_type=="Voter ID") Voter ID
+                                        option(value="Driving license" selected= item.id_type=="Driving license") Driving license
+                            td ID number:
+                                input#idnumber.form-control(type="text" class="text" value= item.id_number)
+                            td
+                                input.form-control(type="button" class="btn btn-danger" value= "Delete")
+                tr
+                    td
+                        input#add(type='button' class="btn btn-primary" value="Add")
+                tr
+                    td
+                        input#submit.btn.btn-primary(type='submit' value='Submit') 
+        script.
+            CKEDITOR.replace('paddr')
+        script.
+            CKEDITOR.replace('baddr')

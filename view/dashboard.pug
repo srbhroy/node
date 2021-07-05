@@ -1,0 +1,121 @@
+doctype html
+html
+  style.
+    div.align-left li a:hover {
+      background-color: #5cb85c;
+    }
+    div.align-left li a {
+      font-weight: bold;
+      background-color: #55B4B0;
+    }
+    form {
+      font-weight: bold;
+    }
+  head
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous')
+    script(type='text/javascript', src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+    script(type="text/javascript").
+            $(document).ready(function() {
+              $('body').css('display', 'none');
+              $('body').fadeIn(800);
+      $("#adduser").click( function() {
+      $("#dash").fadeToggle(800);
+      });
+      $("#submit").click(function() {
+      let firstname = $("#firstname").val();
+      let lastname = $("#lastname").val();
+      let username = $("#username").val();
+      let email = $("#email").val();
+      let status = $('#status:checked').val()=="true"?true:false;
+      let text = "";
+      let obj ={};
+      if(firstname == "") {
+      text +="Please fill in your first name. ";
+      $("#msg").html(text);
+      $( "#dash" ).submit(function( event ) {
+      return false;
+      //- event.preventDefault();
+      });
+      }
+      else if(lastname == "") {
+      text +="Please fill in your last name. ";
+      $("#msg").html(text);
+      $( "#dash" ).submit(function( event ) {
+      return false;
+      //- event.preventDefault();
+      });
+      }
+      else if(username == "") {
+      text +="Please fill in your username. ";
+      $("#msg").html(text);
+      $( "#dash" ).submit(function( event ) {
+      return false;
+      //- event.preventDefault();
+      });
+      }
+      else if(/.+[0-9]+$/.test(email) || email == "") {
+      text +="Please fill in your email. ";
+      $("#msg").html(text);
+      $( "#dash" ).submit(function( event ) {
+      return false;
+      //- event.preventDefault();
+      });
+      }
+      else if(status == undefined) {
+      text +="Please check status. ";
+      $("#msg").html(text);
+      $( "#dash" ).submit(function( event ) {
+      return false;
+      //- event.preventDefault();
+      });
+      }
+      else {
+      obj.name = firstname;
+      obj.lname = lastname;
+      obj.username = username;
+      obj.email = email;
+      obj.status = status;
+      console.log(obj);
+      return true;
+            $("#dash").submit();
+      }
+      });
+      });
+  body(style="background-color: #DDE4F9")
+    div.container.align-left(style="height:100%; width:260px; position:fixed; display: block; z-index:1; background-color:#98B4D4; top:0; left:0; overflow-x: hidden; padding-top: 20px;")
+      ul.nav.justify-content-center(style="height:600px; width:100%; padding:0; margin-left: 0px;")
+        li.nav-item(style="border-bottom: 3px solid #446376;")
+          a.nav-link.active(href='#') Profile
+        li.nav-item(style="border-bottom: 3px solid #446376;")
+          a#adduser.nav-link(href='#') Add user details
+        li.nav-item(style="border-bottom: 3px solid #446376;")
+          a.nav-link(href='/view') Show user details
+        li.nav-item(style="border-bottom: 3px solid #446376;")
+          a.nav-link.disabled(href='/logout') Sign out
+    div(style="margin-left: 265px; padding: 0px 10px; background-color: #DDE4F9")
+      h1.h1(style="text-align:center") Dashboard
+      h2.h2 Hey #{name}, Whats up!
+      h3#msg=status
+      form#dash.form-group(action='/dashboard' method='post' name='dash')
+        table.table
+            tr
+              | Firstname :
+              input#firstname.form-control(type='text' name='firstname')
+            tr
+              | Last name :
+              input#lastname.form-control(type='text' name='lastname')
+            tr
+              | Username :
+              input#username.form-control(type='text' name='username')
+            tr
+              | Email :
+              input#email.form-control(type='email' name='email')
+            tr Status :
+              td True
+                input#status.form-control(type='radio' name='status' value='yes')
+              td False
+                input#status.form-control(type='radio' name='status' value='no')
+            tr
+              td
+                input#submit.btn.btn-primary(type='submit' value='Submit')
+    div
